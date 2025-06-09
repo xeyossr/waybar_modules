@@ -86,6 +86,6 @@ PRAYER_CALC_METHOD=Umm_Al-Qura
 
 ---
 <div align="center">
-    <strong>Check also: <a href="https://github.com/xeyossr/dots">xeyossr/dots</a></strong>
-    *Star ⭐ this repo if you find it useful!*
+    <strong>Check also: <a href="https://github.com/xeyossr/dots">xeyossr/dots</a></strong><br>
+    <em>Star ⭐ this repo if you find it useful!</em>
 </div>
