@@ -57,7 +57,7 @@ PRAYER_CALC_METHOD=Umm_Al-Qura
 `CITY`: City name for prayer times, format: plain text (e.g. Istanbul), default: `empty`  
 `COUNTRY_CODE`: Country code of the city, format: 2-letter ISO code (e.g. TR), default: `empty`  
 `PRAYER_FORECAST_DAYS`: Number of days to show prayer times forecast, integer (e.g. 3), default: `3`  
-`PRAYER_CALC_METHOD`: Method used for prayer time calculation, format: method name string, default: `Umm_Al-Qura`  
+`PRAYER_CALC_METHOD`: Method used for prayer time calculation, format: string, default: `Umm_Al-Qura`  
 
 **Available calculation methods:**  
 - `Muslim_World_League`  
