@@ -1,0 +1,9 @@
+{
+  "custom/prayer": {
+    "exec": "prayer_times.py",
+    "interval": 60,
+    "return-type": "json",
+    "format": "{}",
+    "tooltip": true
+  }
+}
