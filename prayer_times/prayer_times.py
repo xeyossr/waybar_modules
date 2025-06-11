@@ -99,7 +99,7 @@ def find_next_prayer(filtered_today, timezone):
     else:
         return "No data"
 
-def format_tooltip(forecast, method_display_name, city, country_code, next_text):
+def format_tooltip(forecast, method_display_name, city, country_code, next_text, show_tooltip_icon):
     emoji_names = {
         "Fajr": "🌄",
         "Sunrise": "🌅",
@@ -110,12 +110,17 @@ def format_tooltip(forecast, method_display_name, city, country_code, next_text)
     }
 
     lines = [
-        f"🧮 Method: {method_display_name}",
-        f"📍 Location: {city}, {country_code}",
-        f"⏳ Next: {next_text}",
+        f"Method: {method_display_name}",
+        f"Location: {city}, {country_code}",
+        f"Next: {next_text}",
         ""
     ]
 
+    lines_emoji = ["🧮", "📍", "⏳", ""]
+
+    if show_tooltip_icon:
+        lines = [f"{e} {line}" for e, line in zip(lines_emoji, lines)]
+        
     for i, (date_str, timings) in enumerate(forecast):
         if i == 0:
             day_label = f"Today, {date_str}"
@@ -126,7 +131,10 @@ def format_tooltip(forecast, method_display_name, city, country_code, next_text)
         lines.append(f"{day_label}")
         for name, time in timings.items():
             emoji = emoji_names.get(name, "")
-            lines.append(f"{emoji} {name}: {time}")
+            if show_tooltip_icon:
+                lines.append(f"{emoji} {name}: {time}")
+            else:
+                lines.append(f" {name}: {time}")
         lines.append("")
 
     return "\n".join(lines).strip()
@@ -134,13 +142,15 @@ def format_tooltip(forecast, method_display_name, city, country_code, next_text)
 
 def main():
     load_env_file(os.path.expanduser("~/.local/state/.staterc"))
+    load_env_file(os.path.expanduser("~/.local/state/hyde/staterc"))
     load_env_file(os.path.expanduser("~/.local/state/hyde/config"))
 
     city = os.getenv("CITY", "Istanbul")
     country_code = os.getenv("COUNTRY_CODE", "TR")
     method_name = os.getenv("PRAYER_CALC_METHOD", "Diyanet_Isleri_Baskanligi")
     days = int(os.getenv("PRAYER_FORECAST_DAYS", "3"))
-
+    show_icon = os.getenv("PRAYER_SHOW_ICON", "True").lower() in ("true", "1", "yes")
+    show_tooltip_icon = os.getenv("PRAYER_SHOW_TOOLTIP_ICON", "True").lower() in ("true", "1", "yes")
     methods = {
         "Muslim_World_League": 3,
         "Islamic_Society_of_North_America": 2,
@@ -192,12 +202,14 @@ def main():
             date_str = day.strftime("%Y-%m-%d")
             forecast.append((date_str, filtered))
 
-        tooltip = format_tooltip(forecast, method_display_name, city, country_code, next_text)
+        tooltip = format_tooltip(forecast, method_display_name, city, country_code, next_text, show_tooltip_icon)
     else:
         tooltip = ""
 
-    print(json.dumps({"text": f"🕌 {next_text}", "tooltip": tooltip}), flush=True)
-
+    if show_icon:    
+        print(json.dumps({"text": f"🕌 {next_text}", "tooltip": tooltip}), flush=True)
+    else:
+        print(json.dumps({"text": f"{next_text}", "tooltip": tooltip}), flush=True)
 
 if __name__ == "__main__":
     main()
