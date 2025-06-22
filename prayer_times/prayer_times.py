@@ -81,7 +81,7 @@ def find_next_prayer(filtered_today, timezone):
     tomorrow = now + timedelta(days=1)
     response = fetch_timings(
         os.getenv("CITY", "Istanbul"),
-        os.getenv("COUNTRY_CODE", "TR"),
+        os.getenv("COUNTRY_CODE", "Turkey"),
         int(os.getenv("PRAYER_CALC_METHOD_ID", "13")),
     )
     fajr_str = response["data"]["timings"].get("Fajr")
