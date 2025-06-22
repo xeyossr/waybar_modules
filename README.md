@@ -57,7 +57,7 @@ PRAYER_SHOW_TOOLTIP_ICON=False
 ```
 
 `CITY`: City name for prayer times, format: plain text (e.g. Istanbul), default: `empty`  
-`COUNTRY_CODE`: Country code of the city, format: 2-letter ISO code (e.g. TR), default: `empty`  
+`COUNTRY_CODE`: Full name of the country where the city is located (e.g. Turkey). default: `empty`
 `PRAYER_FORECAST_DAYS`: Number of days to show prayer times forecast, format: integer (e.g. 3), default: `3`  
 `PRAYER_CALC_METHOD`: Method used for prayer time calculation, format: string, default: `Umm_Al-Qura`  
 `PRAYER_SHOW_ICON`: Whether to show the icon next to the prayer time text, format: boolean (`True`/`False`), default: `True`
