@@ -164,7 +164,7 @@ func main() {
 	*/
 
 	tooltip := formatTooltip(p)
-	output := fmt.Sprintf("{\"text\": \"\", \"tooltip:\": \"%s\"}", tooltip)
+	output := fmt.Sprintf("{\"text\": \"\", \"tooltip\": \"%s\"}", tooltip)
 	fmt.Println(output)
 }
 
