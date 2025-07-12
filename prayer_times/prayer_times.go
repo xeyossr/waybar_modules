@@ -109,7 +109,7 @@ func getPrayerTimes(config Config, layout string) (PrayerTimes) {
 	prayertimes.Dhuhr = gjson.Get(jsonStr, "data.timings.Dhuhr").String()
 	prayertimes.Asr = gjson.Get(jsonStr, "data.timings.Asr").String()
 	prayertimes.Maghrib = gjson.Get(jsonStr, "data.timings.Maghrib").String()
-	prayertimes.Isha = isha.String()
+	prayertimes.Isha = gjson.Get(jsonStr, "data.timings.Isha").String()
 
 	return prayertimes
 }
@@ -164,7 +164,7 @@ func main() {
 	*/
 
 	tooltip := formatTooltip(p)
-	output := fmt.Sprintf("{\"text\": \"\", \"tooltip\": \"%s\"}", tooltip)
+	output := fmt.Sprintf("{\"text\": \"\", \"tooltip:\": \"%s\"}", tooltip)
 	fmt.Println(output)
 }
 
