@@ -64,26 +64,31 @@ func request(url string) (string) {
 	return string(body)
 }
 
-func afterIsha(layout, todayStr, isha string, config Config) (string) {
+func afterIsha(layout, todayStr, isha string, config Config) string {
 	now := time.Now()
 	layout = fmt.Sprintf("%s 15:04", layout)
+	
 	tomorrow := now.Add(24 * time.Hour)
-	tomorrowStr := tomorrow.Format(layout)
-
+	tomorrowStr := tomorrow.Format(layout[:10]) 
+	
+	nowStr := fmt.Sprintf("%s %s", todayStr, now.Format("15:04"))
+	nowParsed, err := time.Parse(layout, nowStr)
+	checkError(err)
+	
 	targetStr := fmt.Sprintf("%s %s", todayStr, isha)
 	targetTime, err := time.Parse(layout, targetStr)
 	checkError(err)
 	
-	if now.After(targetTime) {
+	if nowParsed.After(targetTime) {
 		url := fmt.Sprintf(
-  		"https://api.aladhan.com/v1/timingsByAddress/%s?address=%s%%2C+%s&method=%s",
-  		tomorrowStr, config.City, config.CountryCode, config.CalcMethod,
+			"https://api.aladhan.com/v1/timingsByAddress/%s?address=%s%%2C+%s&method=%s",
+			tomorrowStr, config.City, config.CountryCode, config.CalcMethod,
 		)
 
 		jsonStr := request(url)
 		return jsonStr
 	}
-	
+
 	return ""
 }
 
@@ -157,7 +162,7 @@ func main() {
 		t, err := time.Parse(timelayout, fullTime)
 		checkError(err)
 
-		if t.After(parsedNow) {
+		if t.After(parsedNow) {.After
 			next_prayer = name
 			break
 		}
