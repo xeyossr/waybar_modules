@@ -1,7 +1,7 @@
 {
   "custom/prayer": {
     "exec": "prayer_times",
-    "interval": 60,
+    "interval": 300,
     "return-type": "json",
     "format": "{}",
     "tooltip": true

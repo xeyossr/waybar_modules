@@ -18,6 +18,7 @@ type Config struct {
 }
 
 type PrayerTimes struct {
+	Date string
 	Fajr string
 	Dhuhr string
 	Asr string
@@ -105,17 +106,17 @@ func getPrayerTimes(config Config, layout string) (PrayerTimes) {
 	}
 
 	var prayertimes PrayerTimes
+	prayertimes.Date = gjson.Get(jsonStr, "data.date.readable").String()
 	prayertimes.Fajr = gjson.Get(jsonStr, "data.timings.Fajr").String()
 	prayertimes.Dhuhr = gjson.Get(jsonStr, "data.timings.Dhuhr").String()
 	prayertimes.Asr = gjson.Get(jsonStr, "data.timings.Asr").String()
 	prayertimes.Maghrib = gjson.Get(jsonStr, "data.timings.Maghrib").String()
 	prayertimes.Isha = gjson.Get(jsonStr, "data.timings.Isha").String()
-
 	return prayertimes
 }
 
 func formatTooltip(prayers PrayerTimes) string {
-	tooltip := fmt.Sprintf("Fajr: %s\\nDhuhr: %s\\nAsr: %s\\nMaghrib: %s\\nIsha: %s", prayers.Fajr, prayers.Dhuhr, prayers.Asr, prayers.Maghrib, prayers.Isha)
+	tooltip := fmt.Sprintf("%s\\nFajr: %s\\nDhuhr: %s\\nAsr: %s\\nMaghrib: %s\\nIsha: %s", prayers.Date, prayers.Fajr, prayers.Dhuhr, prayers.Asr, prayers.Maghrib, prayers.Isha)
 	return tooltip
 }
 
@@ -162,7 +163,7 @@ func main() {
 		}
 	}
 	*/
-
+	
 	tooltip := formatTooltip(p)
 	output := fmt.Sprintf("{\"text\": \"\", \"tooltip\": \"%s\"}", tooltip)
 	fmt.Println(output)
